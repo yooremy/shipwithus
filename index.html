@@ -129,21 +129,26 @@
     <!-- Interactive JavaScript Engine -->
     <script>
         // =========================================================================
-        // SHIPMENT DATABASE - PRELOADED WITH ARD-789042-UK AT STAGE 2
+        // SHIPMENT DATABASE - UPDATED WITH CUSTOMS CLEARANCE STATUS
         // =========================================================================
         const shipmentDatabase = {
             "ARD-789042-UK": {
-                status: "In Transit",
+                status: "Customs Inspection",
                 service: "Air Express Priority Document",
                 origin: "Los Angeles, CA (LAX), USA",
                 destination: "Banbury, Oxfordshire, UK",
-                estimatedDelivery: "Pending Flight Arrival",
+                estimatedDelivery: "Pending Customs Release",
                 itemType: "Express Document Package",
                 updates: [
                     {
+                        title: "Arrived at Import Customs Processing Center",
+                        location: "London Heathrow (LHR) Customs Hub, UK",
+                        active: true // Active Stage 3 (Customs)
+                    },
+                    {
                         title: "En Route to United Kingdom",
                         location: "In Flight (LAX to LHR Transatlantic Transit)",
-                        active: true // Active Stage 2
+                        active: false // Completed Stage 2
                     },
                     {
                         title: "Departed Distribution Center to Airport",
@@ -178,7 +183,7 @@
             // Generate Timeline HTML
             let timelineHTML = '';
             data.updates.forEach((item) => {
-                const bulletStyle = item.active ? 'bg-emerald-500 ring-4 ring-emerald-100' : 'bg-slate-300';
+                const bulletStyle = item.active ? 'bg-amber-500 ring-4 ring-amber-100' : 'bg-slate-300';
                 const titleStyle = item.active ? 'text-slate-900 font-bold' : 'text-slate-600 font-semibold';
                 
                 timelineHTML += `
@@ -199,14 +204,14 @@
                         <div class="text-xs text-brandGold uppercase font-semibold tracking-wider">Official Consignment Record</div>
                         <div class="text-xl font-mono font-bold">${input}</div>
                     </div>
-                    <span class="bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded uppercase tracking-wider">${data.status}</span>
+                    <span class="bg-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded uppercase tracking-wider">${data.status}</span>
                 </div>
                 <div class="p-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs border-b border-slate-200 pb-5 mb-6">
                         <div><span class="text-slate-500 block mb-0.5">Origin Facility:</span><strong class="text-slate-800">${data.origin}</strong></div>
                         <div><span class="text-slate-500 block mb-0.5">Destination City:</span><strong class="text-slate-800">${data.destination}</strong></div>
                         <div><span class="text-slate-500 block mb-0.5">Cargo Classification:</span><strong class="text-slate-800">${data.itemType}</strong></div>
-                        <div><span class="text-slate-500 block mb-0.5">Estimated Delivery:</span><strong class="text-emerald-700 font-bold">${data.estimatedDelivery}</strong></div>
+                        <div><span class="text-slate-500 block mb-0.5">Estimated Delivery:</span><strong class="text-amber-700 font-bold">${data.estimatedDelivery}</strong></div>
                     </div>
 
                     <div class="text-xs font-bold uppercase text-slate-500 tracking-wider mb-4">Shipment Progress & History</div>
